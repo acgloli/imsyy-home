@@ -18,11 +18,15 @@
             {{ config.author }}
           </a>
         </span>
-        <!-- 站点备案 -->
+		<!-- 站点备案 -->
+	    <a v-if="siteIcp_moe" href="https://icp.gov.moe/?keyword=20234260" target="_blank">
+        &amp;
+        {{ siteIcp_moe }}
+		</a>
         <a v-if="siteIcp" href="https://beian.miit.gov.cn" target="_blank">
-          &amp;
-          {{ siteIcp }}
-        </a>
+        &amp;
+        {{ siteIcp }}
+      </a>
       </div>
       <div v-else class="lrc">
         <Transition name="fade" mode="out-in">
@@ -58,6 +62,10 @@ const siteUrl = computed(() => {
   }
   return url;
 });
+// 萌ICP备
+const siteIcp_moe = ref(import.meta.env.VITE_SITE_ICP_moe);
+const SiteAnthor = ref(import.meta.env.VITE_SITE_ANTHOR);
+const SiteUrl = ref(import.meta.env.VITE_SITE_URL);
 </script>
 
 <style lang="scss" scoped>
