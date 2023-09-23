@@ -8,6 +8,7 @@
             <el-radio label="1" size="large" border>每日一图</el-radio>
             <el-radio label="2" size="large" border>随机风景</el-radio>
             <el-radio label="3" size="large" border>随机动漫</el-radio>
+			<el-radio label="4" size="large" border>自建随机图片API</el-radio>
           </el-radio-group>
         </div>
       </el-collapse-item>
