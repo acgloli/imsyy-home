@@ -3,13 +3,15 @@
     <Transition name="fade" mode="out-in">
       <div v-if="!store.playerState || !store.playerLrcShow" class="power">
         <span>
-          Copyright&nbsp;&copy;
-          <span v-if="siteStartDate?.length >= 4" class="site-start">
-            {{ siteStartDate.substring(0, 4) }}
+          <span :class="startYear < fullYear ? 'c-hidden' : 'hidden'">Copyright&nbsp;</span>
+          &copy;
+          <span v-if="startYear < fullYear"
+            class="site-start">
+            {{ startYear }}
             -
           </span>
           {{ fullYear }}
-          <a :href="siteUrl">{{ siteAnthor }}</a>
+          <a :href="siteUrl">{{ siteAuthor }}</a>
         </span>
         <!-- 以下信息请不要修改哦 -->
         <span class="hidden">
@@ -18,15 +20,17 @@
             {{ config.author }}
           </a>
         </span>
-		<!-- 站点备案 -->
-	    <a v-if="siteIcp_moe" href="https://icp.gov.moe/?keyword=20234260" target="_blank">
-        &amp;
-        {{ siteIcp_moe }}
-		</a>
-        <a v-if="siteIcp" href="https://beian.miit.gov.cn" target="_blank">
-        &amp;
-        {{ siteIcp }}
-      </a>
+        <!-- 站点备案 -->
+        <span>
+			<a v-if="siteIcp_moe" href="https://icp.gov.moe/?keyword=20234260" target="_blank">
+			&amp;
+			{{ siteIcp_moe }}
+			</a>
+			<a v-if="siteIcp" href="https://beian.miit.gov.cn" target="_blank">
+			&amp;
+			{{ siteIcp }}
+			</a>
+        </span>
       </div>
       <div v-else class="lrc">
         <Transition name="fade" mode="out-in">
@@ -50,9 +54,13 @@ const store = mainStore();
 const fullYear = new Date().getFullYear();
 
 // 加载配置数据
-const siteStartDate = ref(import.meta.env.VITE_SITE_START);
+// const siteStartDate = ref(import.meta.env.VITE_SITE_START);
+const startYear = ref(
+  import.meta.env.VITE_SITE_START?.length >= 4 ? 
+  import.meta.env.VITE_SITE_START.substring(0, 4) : null
+);
 const siteIcp = ref(import.meta.env.VITE_SITE_ICP);
-const siteAnthor = ref(import.meta.env.VITE_SITE_ANTHOR);
+const siteAuthor = ref(import.meta.env.VITE_SITE_AUTHOR);
 const siteUrl = computed(() => {
   const url = import.meta.env.VITE_SITE_URL;
   if (!url) return "https://www.imsyy.top";
@@ -79,6 +87,9 @@ const SiteUrl = ref(import.meta.env.VITE_SITE_URL);
   text-align: center;
   z-index: 0;
   font-size: 14px;
+  // 文字不换行
+  word-break: keep-all;
+  white-space: nowrap;
   .power {
     animation: fade 0.3s;
   }
@@ -114,9 +125,14 @@ const SiteUrl = ref(import.meta.env.VITE_SITE_URL);
     transition: opacity 0.15s ease-in-out;
   }
   @media (max-width: 720px) {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     &.blur {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
+    }
+  }
+  @media (max-width: 560px) {
+    .c-hidden {
+      display: none;
     }
   }
   @media (max-width: 480px) {
