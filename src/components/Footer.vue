@@ -5,8 +5,7 @@
         <span>
           <span :class="startYear < fullYear ? 'c-hidden' : 'hidden'">Copyright&nbsp;</span>
           &copy;
-          <span v-if="startYear < fullYear"
-            class="site-start">
+          <span v-if="startYear < fullYear" class="site-start">
             {{ startYear }}
             -
           </span>
@@ -22,14 +21,29 @@
         </span>
         <!-- 站点备案 -->
         <span>
-			<a v-if="siteIcp_moe" href="https://icp.gov.moe/?keyword=20234260" target="_blank">
-			&amp;
-			{{ siteIcp_moe }}
-			</a>
-			<a v-if="siteIcp" href="https://beian.miit.gov.cn" target="_blank">
-			&amp;
-			{{ siteIcp }}
-			</a>
+          <!-- 萌ICP备案 -->
+          <a v-if="siteIcp_moe" href="https://icp.gov.moe/?keyword=20234260" target="_blank">
+            &amp;
+            {{ siteIcp_moe }}
+          </a>
+          <!-- ICP备案 -->
+          <a v-if="siteIcp" href="https://beian.miit.gov.cn" target="_blank">
+            &amp;
+            {{ siteIcp }}
+          </a>
+          <!-- 公安备案 -->
+          <a
+            v-if="siteIcp_gongan"
+            href="https://beian.mps.gov.cn/#/query/webSearch?code=35010402351693"
+            target="_blank"
+          >
+            &amp;
+            <img
+              src="https://beian.mps.gov.cn/web/assets/logo01.6189a29f.png"
+              style="vertical-align: middle; width: 20px; height: 20px; margin-bottom: 4px"
+            />
+            {{ siteIcp_gongan }}
+          </a>
         </span>
       </div>
       <div v-else class="lrc">
@@ -56,8 +70,9 @@ const fullYear = new Date().getFullYear();
 // 加载配置数据
 // const siteStartDate = ref(import.meta.env.VITE_SITE_START);
 const startYear = ref(
-  import.meta.env.VITE_SITE_START?.length >= 4 ? 
-  import.meta.env.VITE_SITE_START.substring(0, 4) : null
+  import.meta.env.VITE_SITE_START?.length >= 4
+    ? import.meta.env.VITE_SITE_START.substring(0, 4)
+    : null,
 );
 const siteIcp = ref(import.meta.env.VITE_SITE_ICP);
 const siteAuthor = ref(import.meta.env.VITE_SITE_AUTHOR);
@@ -70,8 +85,10 @@ const siteUrl = computed(() => {
   }
   return url;
 });
-// 萌ICP备
+// 萌ICP备案
 const siteIcp_moe = ref(import.meta.env.VITE_SITE_ICP_moe);
+// 公安备案
+const siteIcp_gongan = ref(import.meta.env.VITE_SITE_ICP_gongan);
 const SiteAnthor = ref(import.meta.env.VITE_SITE_ANTHOR);
 const SiteUrl = ref(import.meta.env.VITE_SITE_URL);
 </script>
